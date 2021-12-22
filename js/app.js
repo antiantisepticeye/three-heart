@@ -65,7 +65,7 @@ class Heart {
     setupMesh() {
         const colorStageMat = new THREE.MeshStandardMaterial({
             side: THREE.DoubleSide,
-            color:0x00ffff
+            color:0x73ffff
         })
 
         const svgMarkup = `
@@ -202,6 +202,8 @@ class Heart {
     }
 
     setupCamera() {
+        
+		window.addEventListener('resize', this.onWindowResize.bind(this));
         let {width, height, aspectRatio} = this.size;
         this.camera = new THREE.PerspectiveCamera(75, innerWidth/innerHeight, 0.1, 1000);
         this.camera.position.z =  5;
@@ -210,6 +212,12 @@ class Heart {
         // this.oc.enableRotate = false
 
     }
+	onWindowResize() {
+		this.camera.aspect = this.size.aspectRatio;
+		this.camera.updateProjectionMatrix();
+		this.renderer.setSize(this.size.width, this.size.height);
+
+	}
 
     setupRenderPasses() {
         let {width, height, aspectRatio} = this.size;
@@ -231,10 +239,8 @@ class Heart {
         this.gui.add(this.config, 'floor').onChange(() => {
             if(!this.config.floor && this.floor) {
                 this.scene.remove(this.floor)
-                console.log('hello1')
             }
             else {
-                console.log('hello2')
                 this.setupFloor();
             }
         });
