@@ -24,6 +24,8 @@ class Heart {
         this.config = {
             floor: true,
             color: 0x00ffff,
+            cycleColors: false,
+            hueSpeed: 600,
 
             exposure: 1,
             bloomStrength: 1,
@@ -244,15 +246,12 @@ class Heart {
                 this.setupFloor();
             }
         });
+        this.gui.add(this.config, 'cycleColors')
+        this.gui.add(this.config, 'hueSpeed', 1, 5000)
 
 
-
-        this.gui.addColor(this.config, 'color').onChange(() => {
-            this.heartMesh.material.color = new THREE.Color(this.config.color);
-            this.heartLamp01.color = new THREE.Color(this.config.color);
-            this.heartLamp02.color = new THREE.Color(this.config.color);
-        });
-
+        this.gui.addColor(this.config, 'color');
+        
 
         this.gui.add( this.config, 'exposure', 0.1, 2 ).onChange( ( value ) => {
 
@@ -289,6 +288,22 @@ class Heart {
 
         
         this.composer.render();
+        if(this.config.cycleColors) {
+            let confCol = new THREE.Color(this.config.color);
+            let confHsl = confCol.getHSL({});
+            
+            let hue = (Math.sin(this.frame/(5001 - this.config.hueSpeed))/2 + 0.5).toFixed(3);
+            const newCol = new THREE.Color(`hsl(${ hue * 360 }, ${Math.round(confHsl.s * 100)}%, ${Math.round(confHsl.l * 100)}%)`)
+
+            this.heartMesh.material.color = newCol;
+            this.heartLamp01.color = newCol;
+            this.heartLamp02.color = newCol;
+            
+        } else {
+            this.heartMesh.material.color = new THREE.Color(this.config.color);
+            this.heartLamp01.color = new THREE.Color(this.config.color);
+            this.heartLamp02.color = new THREE.Color(this.config.color);
+        }
 
 
         requestAnimationFrame(this.animate.bind(this));
