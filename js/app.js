@@ -293,7 +293,6 @@ class Heart {
             let confHsl = confCol.getHSL({});
             
             let hue = (( (this.frame%(5001 - this.config.hueSpeed))/(5001 - this.config.hueSpeed) ) ).toFixed(3);
-            console.log(hue);
             const newCol = new THREE.Color(`hsl(${ hue * 360 }, ${Math.round(confHsl.s * 100)}%, ${Math.round(confHsl.l * 100)}%)`)
 
             this.heartMesh.material.color = newCol;
