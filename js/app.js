@@ -27,6 +27,7 @@ class Heart {
             cycleColors: false,
             hueSpeed: 3000,
 
+            lightStrength: 5,
             exposure: 1,
             bloomStrength: 1,
             bloomThreshold: 0,
@@ -110,22 +111,14 @@ class Heart {
 
         let dist = 0.6
         //lights - 01
-        this.heartLamp01 = new THREE.RectAreaLight(this.config.color, 500, 0.048, 1)
-        this.heartLamp01.rotateY(-Math.PI/2)
-        this.heartLamp01.rotateX(-Math.PI/4)
-        this.heartLamp01.translateZ(-dist);
-        this.scene.add(this.heartLamp01);
+        this.heartLamp01 = new THREE.PointLight(this.config.color, this.config.lightStrength);
+        // this.heartLamp01.translateZ(-dist);
 
 
-
-        //lights - 02 
-        this.heartLamp02 = new THREE.RectAreaLight(this.config.color, 500, 0.048, 1)
-        this.heartLamp02.rotateY(-Math.PI/2)
-        this.heartLamp02.rotateX(-3*Math.PI/4)
-        this.heartLamp02.translateZ(-dist);
-        this.scene.add(this.heartLamp02);
-
+        this.scene.add(this.heartLamp01);      
         
+        // let helper = new THREE.PointLightHelper(this.heartLamp01);
+        // this.scene.add(helper)
 
 
     }
@@ -251,7 +244,10 @@ class Heart {
 
 
         this.gui.addColor(this.config, 'color');
-        
+
+        this.gui.add(this.config, 'lightStrength', 0, 20).onChange(val => {
+            this.heartLamp01.intensity = val;
+        });
 
         this.gui.add( this.config, 'exposure', 0.1, 2 ).onChange( ( value ) => {
 
@@ -282,7 +278,6 @@ class Heart {
         this.frame++;
         this.heartMesh.position.y = Math.sin(this.frame/50) / 1.5;
         this.heartLamp01.position.y = -this.heartMesh.position.y;
-        this.heartLamp02.position.y = -this.heartMesh.position.y;
 
         // this.renderer.render( this.scene, this.camera );
 
@@ -297,12 +292,10 @@ class Heart {
 
             this.heartMesh.material.color = newCol;
             this.heartLamp01.color = newCol;
-            this.heartLamp02.color = newCol;
             
         } else {
             this.heartMesh.material.color = new THREE.Color(this.config.color);
             this.heartLamp01.color = new THREE.Color(this.config.color);
-            this.heartLamp02.color = new THREE.Color(this.config.color);
         }
 
 
