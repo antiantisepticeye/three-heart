@@ -1,18 +1,16 @@
-import * as THREE from 'three';
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import { SVGLoader } from "three/examples/jsm/loaders/SVGLoader";
-import { RectAreaLightUniformsLib } from 'three/examples/jsm/lights/RectAreaLightUniformsLib.js';
-import { RectAreaLightHelper } from 'three/examples/jsm/helpers/RectAreaLightHelper.js';
+import * as THREE from './modules/three.module.js';
+import { OrbitControls } from "./modules/OrbitControls.js";
+import { SVGLoader } from "./modules/SVGLoader.js";
+import { RectAreaLightUniformsLib } from './modules/RectAreaLightUniformsLib.js';
 RectAreaLightUniformsLib.init()
 
 
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
-import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
-import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
+import { EffectComposer } from './modules/EffectComposer.js';
+import { RenderPass } from './modules/RenderPass.js';
+import { UnrealBloomPass } from './modules/UnrealBloomPass.js';
 
 
-import * as dat from 'dat.gui';
+import * as dat from './modules/dat.gui.module.js';
 
 
 
