@@ -25,7 +25,7 @@ class Heart {
             floor: true,
             color: 0x00ffff,
             cycleColors: false,
-            hueSpeed: 600,
+            hueSpeed: 3000,
 
             exposure: 1,
             bloomStrength: 1,
